@@ -1,7 +1,11 @@
 package com.entertainment;
 
 import java.util.Objects;
-
+/*
+ * Natural order is defined by 'brand' (String) and volume (int) when tied on brand.
+ * To be "consistent with equals" our sort key(s) must align with what was chosen
+ * for equals() and hashCode().
+ */
 public class Television implements Comparable<Television>{
 
     // fields
@@ -94,10 +98,19 @@ public class Television implements Comparable<Television>{
         }
         return result;
     }
-
+    /*
+     * Natural order is defined by 'brand' (String) and volume (int) when tied on brand.
+     * To be "consistent with equals" our sort key(s) must align with what was chosen
+     * for equals() and hashCode().
+     */
     @Override
     public int compareTo(Television other) {
-        return this.getBrand().compareTo(other.getBrand());
+        int result = this.getBrand().compareTo(other.getBrand());
+
+        if (result == 0) {
+            result = Integer.compare(this.getVolume(), other.getVolume());
+        }
+        return result;
     }
 
     @Override
