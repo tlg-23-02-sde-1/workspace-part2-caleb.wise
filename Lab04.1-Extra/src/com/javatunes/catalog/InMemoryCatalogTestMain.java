@@ -6,7 +6,7 @@
  * Copyright LearningPatterns Inc.
  */
 
-package com.javatunes.catalog.test;
+package com.javatunes.catalog;
 
 import com.javatunes.catalog.Catalog;
 import com.javatunes.catalog.InMemoryCatalog;
@@ -15,7 +15,7 @@ import com.javatunes.catalog.MusicItem;
 
 import java.util.Collection;
 
-class InMemoryCatalogTest {
+class InMemoryCatalogTestMain {
 
 
     /*
@@ -27,13 +27,13 @@ class InMemoryCatalogTest {
      */
     public static void main(String[] args) {
         // testFindById();              // complete
-        // testFindByKeyword();         //
+        // testFindByKeyword();         // complete
         // testFindByCategory();        // complete
         // testSize();                  // complete
         // testGetAll();                // complete (used copyOf and want to use the other one)
         // testFindSelfTitled();        // complete
-        // testFindRockBottom();        //
-        // testFindGenreCount();        //
+        // testFindRockBottom();        // complete
+         testFindGenreCount();        //
         // testFindAverageCost();       //
         // testFindCheapestInGenre();   //
         // testFindAverageInGenre();    //
@@ -56,7 +56,7 @@ class InMemoryCatalogTest {
 
     private static void testFindByKeyword() {
         InMemoryCatalog catalog = new InMemoryCatalog();
-        Collection<MusicItem> items = catalog.findByKeyword("ROCK");
+        Collection<MusicItem> items = catalog.findByKeyword("seal");
         for (MusicItem item : items) {
             System.out.println(item);
         }
@@ -88,9 +88,16 @@ class InMemoryCatalogTest {
         dump(catalog.findSelfTitled());
     }
 
-    //  private static void testFindRockBottom();
+    private static void testFindRockBottom() {
+        InMemoryCatalog catalog = new InMemoryCatalog();
+        Collection<MusicItem> item = catalog.findRockBottom(20.00);
+        dump(catalog.findRockBottom(20.00));
+    }
 
-    // private static void testFindGenreCount();
+    private static void testFindGenreCount() {
+        InMemoryCatalog catalog = new InMemoryCatalog();
+        System.out.println(catalog.size());
+    }
 
     // private static void testFindAverageCost();
 

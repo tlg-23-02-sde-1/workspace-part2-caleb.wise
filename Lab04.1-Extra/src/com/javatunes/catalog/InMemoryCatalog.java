@@ -11,12 +11,13 @@ package com.javatunes.catalog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 // OF COURSE THIS CLASS DOESN'T COMPILE
 // Your first job is to fulfill the contract that this class has signed.
 public class InMemoryCatalog implements Catalog {
 
-    private List<MusicItem> catalogData = new ArrayList<>(List.of(
+    private final List<MusicItem> catalogData = new ArrayList<>(List.of(
                    /* id    title                        artist                       releaseDate  price  musicCategory */
         new MusicItem(1L,  "Diva",                      "Annie Lennox",              "1992-01-04", 13.99, MusicCategory.POP),
         new MusicItem(2L,  "Dream of the Blue Turtles", "Sting",                     "1985-02-05", 14.99, MusicCategory.POP),
@@ -40,7 +41,7 @@ public class InMemoryCatalog implements Catalog {
 
     // Interface methods required by the Catalog "contract"
 
-    @Override
+    @Override //Test Complete
     public MusicItem findById(Long id) {
         // declare the return value
         MusicItem result = null;
@@ -60,7 +61,11 @@ public class InMemoryCatalog implements Catalog {
         Collection<MusicItem> result = new ArrayList<>();
 
         for (MusicItem item : catalogData) {
-            if (item.getMusicCategory().equals(keyword)) {
+            if (item.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+                result.add(item);
+                break;
+            }
+            if (item.getArtist().toLowerCase().contains(keyword.toLowerCase())) {
                 result.add(item);
             }
         }
@@ -87,10 +92,11 @@ public class InMemoryCatalog implements Catalog {
 
     @Override
     public Collection<MusicItem> getAll() {
-        Collection<MusicItem> result = new ArrayList<>();
-        result = new ArrayList<>(List.copyOf(catalogData));
-
-        return result;
+//        Collection<MusicItem> result = new ArrayList<>();
+//        result = new ArrayList<>();
+//
+//        return result;
+        return catalogData;
     }
 
     /**
@@ -134,19 +140,27 @@ public class InMemoryCatalog implements Catalog {
      */
     public Collection<MusicItem> findRockBottom(double maxPrice) {
         Collection<MusicItem> result = new ArrayList<>();
-
+        for (MusicItem item : catalogData) {
+            if (item.getMusicCategory().equals(MusicCategory.ROCK) && (item.getPrice() <= maxPrice)) {
+                result.add(item);
+            }
+        }
         return result;
+    }
+
+    @Override
+    public Collection<MusicItem> getGenreCount() {
+        return null;
     }
 
     /**
      * TASK: how many items of the specified genre (MusicCategory) do we sell?
      */
-    public int genreCount (MusicCategory category) {
-        int result = 0;
 
-        return result;
+    public int findGenreCount(int count){
+
+        return count;
     }
-
 
     /**
      * TASK: determine average price of our low-cost, extensive catalog of music.

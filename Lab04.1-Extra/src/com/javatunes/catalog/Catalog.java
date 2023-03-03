@@ -44,4 +44,14 @@ public interface Catalog {
      * See java.util.Collections class (an all-static utility class) for help here.
      */
     public Collection<MusicItem> getAll();
+
+    /**
+     * TASK: find all "rock" items whose price is less than or equal to the specified price.
+     */
+    public Collection<MusicItem> findRockBottom(double maxPrice);
+
+    /**
+     * TASK: how many items of the specified genre (MusicCategory) do we sell?
+     */
+    public Collection<MusicItem> getGenreCount();
 }
