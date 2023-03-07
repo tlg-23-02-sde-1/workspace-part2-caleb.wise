@@ -16,8 +16,7 @@ import java.sql.Date;
  * - equals() and hashCode() are both based solely on id.
  * - Comparable is based on id, also -> natural order defined by increasing id.
  */
-public class MusicItem
-implements Comparable<MusicItem> {
+public class MusicItem implements Comparable<MusicItem> {
     private Long id;
     private String title;
     private String artist;

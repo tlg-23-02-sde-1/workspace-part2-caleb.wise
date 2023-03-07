@@ -1,6 +1,7 @@
 package com.crunch;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 class RadishSortTest {
@@ -27,6 +28,28 @@ class RadishSortTest {
         radishes.sort(new RadishColorComparator());
         dump(radishes);
         System.out.println();
+
+        // sort by tail length
+        System.out.println("sort by tailLength, via anonymous class");
+        radishes.sort( new Comparator<Radish>() {
+
+            @Override
+            public int compare(Radish radish1, Radish radish2) {
+                return Double.compare(radish1.getTailLength(), radish2.getTailLength());
+            }
+        });
+        dump(radishes);
+        System.out.println();
+
+        // sort by sprouts
+        System.out.println("sort by sprouts, via anonymous class");
+        radishes.sort(new Comparator<Radish>() {
+            @Override
+            public int compare(Radish radish1, Radish radish2) {
+                return Integer.compare(radish1.getSprouts(), radish2.getSprouts());
+            }
+        });
+        dump(radishes);
     }
 
     private static void dump(List<Radish> radishList) {
