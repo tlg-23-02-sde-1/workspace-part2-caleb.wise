@@ -46,7 +46,7 @@ public class InMemoryCatalogTest {
     @Test(expected=UnsupportedOperationException.class)
     public void getAll_ShouldReturnReadonlyCollection() throws UnsupportedOperationException {
         Collection<MusicItem> items = catalog.getAll();
-        items.add(); // should trigger UnsupportedOperationException
+        items.clear(); // should trigger UnsupportedOperationException
     }
 
     // testFindSelfTitled

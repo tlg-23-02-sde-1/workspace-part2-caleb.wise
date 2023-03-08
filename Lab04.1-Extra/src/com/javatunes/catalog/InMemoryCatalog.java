@@ -157,8 +157,13 @@ public class InMemoryCatalog implements Catalog {
      * TASK: how many items of the specified genre (MusicCategory) do we sell?
      */
 
-    public int findGenreCount(int count){
-
+    public int findGenreCount(MusicCategory genre){
+        int count = 0;
+        for (MusicItem item : catalogData) {
+           if (item.getMusicCategory().equals(genre)) {
+               count++;
+           }
+        }
         return count;
     }
 
@@ -167,6 +172,12 @@ public class InMemoryCatalog implements Catalog {
      */
     public double averageCost () {
         double result = 0.0;
+
+        double sum = 0.0;
+        for (MusicItem item : catalogData) {
+            sum = sum + item.getPrice();
+        }
+        result = sum / catalogData.size();
 
         return result;
     }
