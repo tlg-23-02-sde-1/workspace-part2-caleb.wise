@@ -1,6 +1,6 @@
 package com.duckrace;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -38,7 +38,33 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-public class Board {
+public class Board implements Serializable {
+    // static variables and methods
+    private static final String dataFilePath = "data/board.dat";
+    private static final String confFilePath = "conf/student-ids.csv";
+
+    /*
+     * If file data/board.dat exists, read that binary file into a Board object,
+     * otherwise create a new board
+     */
+
+    public static Board getInstance() {
+        Board board = null;
+
+        if (Files.exists(Path.of(dataFilePath))) {
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
+                board = (Board) in.readObject();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            board = new Board();
+        }
+        return board;
+    }
+
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
 
@@ -62,6 +88,7 @@ public class Board {
             racerMap.put(id, racer); // put in map (easy to forget this step)
         }
         racer.win(reward);
+        save();
     }
     /*
      * TODO: render the data "pretty," i.e., like we see in class
@@ -81,6 +108,20 @@ public class Board {
         }
     }
 
+    public int maxId() {
+        return studentIdMap.size();
+    }
+
+    // writes the state of this board object to binary file data/board.dat.
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))) {
+            out.writeObject(this);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
      * Populates studentIdMap from file conf/student-ids.csv
      */
@@ -89,7 +130,7 @@ public class Board {
         Map<Integer,String> idMap = new HashMap<>();
 
         try {
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
+            List<String> lines = Files.readAllLines(Path.of(confFilePath)); // TODO: make file path like above
             // for each line in lines, we want to split the string into "tokens"
             // then convert to Integer, String so we can put this in the map
             for (String line : lines) {
